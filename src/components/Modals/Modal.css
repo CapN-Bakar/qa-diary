@@ -211,3 +211,131 @@
 /* ── DISABLED PIN BLOCK ── */
 .pin-block-disabled { opacity: 0.4; pointer-events: none; }
 .pin-digit:disabled { cursor: not-allowed; background: var(--parchment); }
+
+/* ── IMAGE UPLOAD ── */
+.image-drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background: var(--cream);
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+
+.image-drop-zone:hover,
+.image-drop-zone.drag-over {
+  border-color: var(--olive-mid);
+  background: var(--white);
+}
+
+.drop-zone-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.drop-icon { font-size: 24px; }
+
+.drop-zone-hint span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.drop-sub { font-size: 11px !important; }
+
+.upload-link {
+  background: none;
+  border: none;
+  color: var(--olive-mid);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.upload-link:hover { color: var(--olive); }
+
+.upload-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.upload-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--olive);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.upload-error {
+  font-size: 12px;
+  color: var(--rust);
+  margin-top: 6px;
+}
+
+/* ── IMAGE PREVIEWS ── */
+.image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.image-preview-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--parchment);
+}
+
+.preview-img,
+.preview-gif {
+  display: block;
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.gif-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: rgba(0,0,0,0.65);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.12s;
+}
+
+.remove-image-btn:hover { background: rgba(158, 74, 42, 0.85); }

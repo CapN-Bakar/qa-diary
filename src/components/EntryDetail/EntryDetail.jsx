@@ -41,6 +41,8 @@ export default function EntryDetail() {
     }
   }
 
+  const isGif = (url) => url.toLowerCase().includes('.gif')
+
   return (
     <div className="entry-detail">
       <button className="back-btn" onClick={() => navigateTo(prevView)}>← Back</button>
@@ -54,13 +56,29 @@ export default function EntryDetail() {
       <h1 className="detail-title">{entry.title}</h1>
       <div className="detail-body">{entry.content}</div>
 
+      {/* ── IMAGES & GIFS ── */}
+      {entry.images && entry.images.length > 0 && (
+        <div className="detail-images">
+          {entry.images.map((img, i) => (
+            <div key={i} className="detail-image-wrap">
+              <img
+                src={img.url}
+                alt={img.name || `Image ${i + 1}`}
+                className="detail-image"
+                loading="lazy"
+              />
+              {isGif(img.url) && <span className="detail-gif-badge">GIF</span>}
+            </div>
+          ))}
+        </div>
+      )}
+
       {entry.tags.length > 0 && (
         <div className="detail-tags">
           {entry.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
         </div>
       )}
 
-      {/* Owner-only actions — no Change PINs button since PINs are hardcoded in source */}
       {unlocked && (
         <div className="detail-actions">
           <button className="btn btn-secondary" onClick={() => openAddModal(entry.id)}>✏️ Edit</button>

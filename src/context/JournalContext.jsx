@@ -2,15 +2,6 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { supabase } from '../lib/supabase'
 import { uid, hashPin } from '../utils/helpers'
 
-/**
- * OWNER AUTH — dual PIN with hardcoded SHA-256 hashes
- * PINs are never stored anywhere on the client.
- *
- * To change PINs:
- *   1. node -e "const c=require('crypto'); console.log(c.createHash('sha256').update('NEWPIN').digest('hex'))"
- *   2. Replace the hash constants below
- *   3. Redeploy to Vercel
- */
 const OWNER_PIN1_HASH = '0985b889a1fe4f4e1fb925061ac6fb2247f10875f5fcbe63eec2ab55ed68970e'
 const OWNER_PIN2_HASH = '6c94e35ccc352d4e9ef0b99562cff995a5741ce8de8ad11b568892934daee366'
 
@@ -20,9 +11,8 @@ export function JournalProvider({ children }) {
   const [entries, setEntries]   = useState([])
   const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState(null)
+  const [unlocked, setUnlocked] = useState(false)
 
-  // ── Session state ──
-  const [unlocked, setUnlocked]               = useState(false)
   const [currentView, setCurrentView]         = useState('feed')
   const [activeCategory, setActiveCategory]   = useState('all')
   const [selectedEntryId, setSelectedEntryId] = useState(null)
@@ -32,10 +22,7 @@ export function JournalProvider({ children }) {
   const [showLoginModal, setShowLoginModal]   = useState(false)
   const [editingId, setEditingId]             = useState(null)
 
-  // ── Fetch entries from Supabase on mount & when unlock state changes ──
-  useEffect(() => {
-    fetchEntries()
-  }, [unlocked])
+  useEffect(() => { fetchEntries() }, [unlocked]) // eslint-disable-line
 
   async function fetchEntries() {
     setLoading(true)
@@ -46,15 +33,10 @@ export function JournalProvider({ children }) {
         .select('*')
         .order('date', { ascending: false })
 
-      // Visitors only see public entries
-      if (!unlocked) {
-        query = query.eq('is_private', false)
-      }
+      if (!unlocked) query = query.eq('is_private', false)
 
       const { data, error } = await query
       if (error) throw error
-
-      // Map snake_case DB columns to camelCase for the app
       setEntries(data.map(mapFromDB))
     } catch (err) {
       console.error('Failed to fetch entries:', err)
@@ -64,7 +46,6 @@ export function JournalProvider({ children }) {
     }
   }
 
-  // ── DB column mapping helpers ──
   function mapFromDB(row) {
     return {
       id:        row.id,
@@ -74,6 +55,7 @@ export function JournalProvider({ children }) {
       content:   row.content,
       tags:      row.tags || [],
       isPrivate: row.is_private,
+      images:    row.images || [],
     }
   }
 
@@ -86,10 +68,10 @@ export function JournalProvider({ children }) {
       content:    entry.content,
       tags:       entry.tags || [],
       is_private: entry.isPrivate,
+      images:     entry.images || [],
     }
   }
 
-  // ── Entry actions ──
   const addEntry = useCallback(async (data) => {
     const entry = { ...data, id: uid() }
     const { error } = await supabase.from('entries').insert(mapToDB(entry))
@@ -110,7 +92,6 @@ export function JournalProvider({ children }) {
     setEntries(prev => prev.filter(e => e.id !== id))
   }, [])
 
-  // ── Auth ──
   const unlock = useCallback(async (p1, p2) => {
     const [h1, h2] = await Promise.all([hashPin(p1), hashPin(p2)])
     if (h1 !== OWNER_PIN1_HASH) return { ok: false, error: 'First PIN is incorrect.' }
@@ -122,11 +103,8 @@ export function JournalProvider({ children }) {
   const lock = useCallback(() => {
     setUnlocked(false)
     setCurrentView(v => v === 'all' ? 'feed' : v)
-    // Re-fetch to filter out private entries for visitors
-    fetchEntries()
   }, [])
 
-  // ── Navigation ──
   const navigateTo = useCallback((view, entryId = null) => {
     if (view === 'detail' && entryId) {
       setPrevView(cur => cur !== 'detail' ? cur : prevView)
@@ -142,8 +120,7 @@ export function JournalProvider({ children }) {
 
   return (
     <JournalContext.Provider value={{
-      entries, loading, error,
-      unlocked,
+      entries, loading, error, unlocked,
       currentView, activeCategory, selectedEntryId, prevView, searchQuery,
       showAddModal, showLoginModal, editingId,
       setActiveCategory, setSearchQuery,
