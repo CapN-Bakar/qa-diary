@@ -6,7 +6,7 @@ import { getRandomQuote } from '../../utils/helpers'
 import './Feed.css'
 
 export default function Feed({ showAll = false }) {
-  const { entries, unlocked, activeCategory, searchQuery, setSearchQuery } = useJournal()
+  const { entries, loading, error, unlocked, activeCategory, searchQuery, setSearchQuery } = useJournal()
   const [quote]       = useState(() => getRandomQuote(QUOTES))
   const [localSearch, setLocalSearch] = useState(searchQuery)
 
@@ -22,8 +22,6 @@ export default function Feed({ showAll = false }) {
     const q = localSearch.toLowerCase()
     return entries
       .filter(e => {
-        // Visitors only see public entries
-        if (!showAll && e.isPrivate && !unlocked) return false
         if (!showAll && activeCategory !== 'all' && e.category !== activeCategory) return false
         if (q) return (
           e.title.toLowerCase().includes(q) ||
@@ -33,7 +31,7 @@ export default function Feed({ showAll = false }) {
         return true
       })
       .sort((a, b) => new Date(b.date) - new Date(a.date))
-  }, [entries, activeCategory, localSearch, showAll, unlocked])
+  }, [entries, activeCategory, localSearch, showAll])
 
   const title = showAll
     ? 'All Entries (Owner View)'
@@ -64,7 +62,18 @@ export default function Feed({ showAll = false }) {
         <span className="view-count">{filtered.length} {filtered.length === 1 ? 'entry' : 'entries'}</span>
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="loading-state">
+          <div className="loading-spinner" />
+          <p>Loading entries…</p>
+        </div>
+      ) : error ? (
+        <div className="empty-state">
+          <div className="empty-icon">⚠️</div>
+          <div className="empty-title">Something went wrong</div>
+          <div className="empty-sub">{error}</div>
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon">📔</div>
           <div className="empty-title">No entries found</div>
