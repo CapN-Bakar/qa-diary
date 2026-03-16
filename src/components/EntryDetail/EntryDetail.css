@@ -1,0 +1,62 @@
+.entry-detail { display: flex; flex-direction: column; }
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--olive-mid);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin-bottom: 20px;
+  transition: color 0.12s;
+}
+.back-btn:hover { color: var(--dark); }
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.detail-date   { font-size: 13px; color: var(--text-muted); }
+.private-badge { font-size: 13px; color: var(--amber); }
+
+.detail-title {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 18px;
+  line-height: 1.25;
+}
+
+.detail-body {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.85;
+  white-space: pre-wrap;
+  border-left: 3px solid var(--border-light);
+  padding-left: 18px;
+}
+
+.detail-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+  flex-wrap: wrap;
+  align-items: center;
+}

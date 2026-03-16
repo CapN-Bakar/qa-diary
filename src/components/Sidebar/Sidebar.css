@@ -1,0 +1,57 @@
+.sidebar-left, .sidebar-right { padding: 2rem 1.25rem; }
+.sidebar-section { margin-bottom: 2rem; }
+
+.sidebar-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tag-filter { display: flex; flex-direction: column; gap: 2px; }
+
+.tag-filter button {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-mid);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tag-filter button:hover  { background: var(--parchment); color: var(--text); }
+.tag-filter button.active { background: var(--amber-pale); color: var(--amber); font-weight: 500; }
+
+.tag-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.topic-cloud button { font-size: 12px; }
+.no-topics { font-size: 13px; color: var(--text-muted); }
+
+/* ── STATS ── */
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.stat-num   { font-family: var(--font-serif); font-size: 28px; font-weight: 600; color: var(--olive); line-height: 1; }
+.stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+/* ── WEEK LIST ── */
+.no-week { font-size: 13px; color: var(--text-muted); }
+.week-list { display: flex; flex-direction: column; }
+.week-item { padding: 6px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+.week-item:hover .week-title { color: var(--olive); }
+.week-title { display: block; font-size: 13px; color: var(--text); line-height: 1.4; }
+.week-date  { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }

@@ -1,0 +1,70 @@
+.header {
+  background: var(--dark);
+  color: var(--cream);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--amber);
+}
+
+.logo { display: flex; align-items: baseline; gap: 10px; }
+
+.logo-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--amber-light);
+  letter-spacing: -0.01em;
+}
+
+.logo-sub {
+  font-size: 12px;
+  color: var(--olive-light);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav { display: flex; gap: 4px; align-items: center; }
+
+.nav button {
+  background: none;
+  border: none;
+  color: #b0c4a0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nav button:hover  { background: rgba(255,255,255,0.08); color: var(--cream); }
+.nav button.active { background: var(--olive); color: var(--amber-light); }
+
+/* New Entry button */
+.new-entry-btn {
+  background: var(--amber) !important;
+  color: var(--dark) !important;
+  font-weight: 500 !important;
+  margin-left: 4px;
+}
+.new-entry-btn:hover { background: var(--amber-light) !important; }
+
+/* Owner login/logout button */
+.owner-btn {
+  margin-left: 8px;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: #b0c4a0 !important;
+}
+.owner-btn:hover   { border-color: var(--amber) !important; color: var(--amber-light) !important; }
+.owner-btn.unlocked {
+  border-color: var(--amber) !important;
+  color: var(--amber-light) !important;
+  background: rgba(193,127,36,0.12) !important;
+}
