@@ -55,3 +55,13 @@
 .week-item:hover .week-title { color: var(--olive); }
 .week-title { display: block; font-size: 13px; color: var(--text); line-height: 1.4; }
 .week-date  { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── VISITOR STAT CARD ── */
+.stat-card-visitors .stat-num {
+  color: var(--amber);
+}
+
+.stat-card-visitors {
+  border-color: var(--amber-light);
+  background: var(--amber-pale);
+}

@@ -339,3 +339,95 @@
 }
 
 .remove-image-btn:hover { background: rgba(158, 74, 42, 0.85); }
+
+/* ── FORMAT TOOLBAR ── */
+.format-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.format-toolbar + textarea {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: none !important;
+}
+
+.format-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  width: 28px;
+  height: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--text-mid);
+  transition: all 0.12s;
+  font-family: var(--font-sans);
+  padding: 0;
+}
+
+.format-btn:hover {
+  background: var(--white);
+  border-color: var(--border);
+  color: var(--dark);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.toolbar-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+/* ── WYSIWYG EDITOR ── */
+.wysiwyg-editor {
+  width: 100%;
+  min-height: 160px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--cream);
+  outline: none;
+  line-height: 1.7;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: text;
+}
+
+.wysiwyg-editor:focus {
+  border-color: var(--olive-mid);
+  background: var(--white);
+}
+
+/* Placeholder via data attribute */
+.wysiwyg-editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Styles applied inside the editor */
+.wysiwyg-editor strong { font-weight: 600; }
+.wysiwyg-editor em     { font-style: italic; }
+.wysiwyg-editor u      { text-decoration: underline; }
+.wysiwyg-editor ul     { padding-left: 20px; margin: 4px 0; }
+.wysiwyg-editor ol     { padding-left: 20px; margin: 4px 0; }
+.wysiwyg-editor li     { margin: 2px 0; }
