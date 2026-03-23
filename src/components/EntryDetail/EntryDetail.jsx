@@ -96,6 +96,28 @@ export default function EntryDetail() {
         {entry.isPrivate && <span className="private-badge">🔒 Private</span>}
       </div>
 
+      {/* Posted / Updated timestamps */}
+      <div className="detail-timestamps">
+        {entry.createdAt && (
+          <span>
+            📅 Posted{" "}
+            {new Date(entry.createdAt).toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+          </span>
+        )}
+        {entry.updatedAt && (
+          <span>
+            ✏️ Updated{" "}
+            {new Date(entry.updatedAt).toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+          </span>
+        )}
+      </div>
+
       <h1 className="detail-title">{entry.title}</h1>
 
       {/* Render HTML for new posts, markdown for old posts */}

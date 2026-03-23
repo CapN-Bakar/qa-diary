@@ -65,3 +65,13 @@
   border-color: var(--amber-light);
   background: var(--amber-pale);
 }
+
+/* ── TODAY'S VISITORS CARD ── */
+.stat-card-today .stat-num {
+  color: #1a6b9a;
+}
+
+.stat-card-today {
+  border-color: #b5d4f4;
+  background: #e6f1fb;
+}

@@ -1,18 +1,21 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useJournal } from "../../context/JournalContext";
 import { formatDate } from "../../utils/helpers";
-import { trackVisit, getVisitorCount } from "../../lib/analytics";
+import { trackVisit, getVisitorStats } from "../../lib/analytics";
 import "./Sidebar.css";
 
 export default function SidebarRight() {
   const { entries, unlocked, navigateTo } = useJournal();
-  const [visitorCount, setVisitorCount] = useState(null);
+  const [visitorStats, setVisitorStats] = useState({
+    total: null,
+    today: null,
+  });
 
   useEffect(() => {
     async function init() {
       await trackVisit();
-      const count = await getVisitorCount();
-      setVisitorCount(count);
+      const stats = await getVisitorStats();
+      setVisitorStats(stats);
     }
     init();
   }, []);
@@ -36,22 +39,35 @@ export default function SidebarRight() {
       .slice(0, 4);
   }, [entries]);
 
+  const fmt = (n) => (n !== null ? n : "…");
+
   const STATS = [
     { num: stats.total, label: "Total Entries" },
     { num: stats.pub, label: "Public" },
     { num: stats.priv, label: "Private" },
     { num: stats.days, label: "Days Tracked" },
-    { num: visitorCount !== null ? visitorCount : "…", label: "Visitors" },
+    {
+      num: fmt(visitorStats.today),
+      label: "Today's Visitors",
+      variant: "today",
+    },
+    { num: fmt(visitorStats.total), label: "Total Visitors", variant: "total" },
   ];
 
   return (
     <aside className="sidebar-right">
       <div className="sidebar-section">
         <div className="sidebar-label">Stats</div>
-        {STATS.map(({ num, label }) => (
+        {STATS.map(({ num, label, variant }) => (
           <div
-            className={`stat-card${label === "Visitors" ? " stat-card-visitors" : ""}`}
             key={label}
+            className={[
+              "stat-card",
+              variant === "today" ? "stat-card-today" : "",
+              variant === "total" ? "stat-card-visitors" : "",
+            ]
+              .join(" ")
+              .trim()}
           >
             <div className="stat-num">{num}</div>
             <div className="stat-label">{label}</div>
